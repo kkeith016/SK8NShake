@@ -22,13 +22,6 @@ public abstract class MenuItems {
         this.notes = notes;
     }
 
-    /*
-    Core Methods
-   - CalculatePrice - Done
-   - addTopping - put into interface
-   - removeTopping - put into interface
-     */
-
     public double calculatePrice(){
         double total = basePrice;
         int basicCount = 0;
