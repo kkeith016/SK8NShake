@@ -24,19 +24,45 @@ public abstract class MenuItems {
 
     /*
     Core Methods
-   - CalculatePrice
-   - display
+   - CalculatePrice - Done
    - addTopping
    - removeTopping
-
-   - work on once we get the toppings finished.
      */
 
     public double calculatePrice(){
-        double totalPrice = basePrice;
-        for(Topping topping : toppings){
-            total += topping.getPrice();
+        double total = basePrice;
+        int basicCount = 0;
+
+        for (Topping topping : toppings) {
+            if (topping.getTier().equalsIgnoreCase("Basic")) {
+                basicCount++;
+                if (basicCount > 3) {
+                    total += 0.50; // charge for extra basics after 3
+                }
+            } else {
+                total += topping.getBasePrice(); // premium, deluxe, vegan
+            }
         }
-        return totalPrice;
+        return total;
     }
+    // --- Add a topping ---
+    public void addTopping(Topping topping) {
+        if (topping != null) {
+            toppings.add(topping);
+            System.out.println("Added topping: " + topping.getName());
+        } else {
+            System.out.println("Invalid topping.");
+        }
+    }
+
+    // --- Remove a topping by name ---
+    public void removeTopping(String toppingName) {
+        boolean removed = toppings.removeIf(t -> t.getName().equalsIgnoreCase(toppingName));
+        if (removed) {
+            System.out.println("Removed topping: " + toppingName);
+        } else {
+            System.out.println("Topping not found: " + toppingName);
+        }
+    }
+
 }
