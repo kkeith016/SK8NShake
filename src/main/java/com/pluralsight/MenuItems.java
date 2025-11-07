@@ -1,6 +1,6 @@
 package com.pluralsight;
 
-import com.pluralsight.Food.Toppings;
+import com.pluralsight.Food.Topping;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -9,12 +9,12 @@ public abstract class MenuItems {
     protected String name;
     protected String size;
     protected double basePrice;
-    protected List<Toppings> toppings;
+    protected List<Topping> toppings;
     protected String notes;
 
     //----Constructor----
 
-    public MenuItems(String name, String size, double price, List<Toppings> toppings, String notes) {
+    public MenuItems(String name, String size, double price, List<Topping> toppings, String notes) {
         this.name = name;
         this.size = size;
         this.basePrice = price;
