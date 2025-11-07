@@ -11,7 +11,7 @@ import java.util.List;
 public class Burger extends MenuItems implements Customizable {
 
     private Bread bread;
-    private List<Topping> toppings; // Each burger can have its own topping list
+    private final List<Topping> toppings; // Each burger can have its own topping list
 
     public Burger(String name, String size, double basePrice, Bread bread, String notes) {
         super(name, size, basePrice, notes);
