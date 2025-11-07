@@ -1,4 +1,4 @@
-package com.pluralsight;
+package com.pluralsight.Food;
 
 public class ToppingsLibrary {
 }
