@@ -54,5 +54,19 @@ public class ToppingsLibrary {
                 new Topping("Vegan Combo", "Vegan", "Vegan", 2.00, List.of("Burger", "Pizza"))
         );
     }
+    // Optional helper — get toppings by category
+    public static List<Topping> getToppingsByCategory(String category) {
+        return getAllToppings().stream()
+                .filter(t -> t.getCategory().equalsIgnoreCase(category))
+                .toList();
+    }
+
+    // Optional helper — get toppings valid for a specific menu item (e.g. “Burger”)
+    public static List<Topping> getValidToppingsForItem(String itemType) {
+        return getAllToppings().stream()
+                .filter(t -> t.isValidFor(itemType))
+                .toList();
+    }
 }
-}
+
+
