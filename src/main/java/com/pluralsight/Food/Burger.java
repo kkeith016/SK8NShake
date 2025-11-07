@@ -1,6 +1,6 @@
 package com.pluralsight.Food;
 
-import com.pluralsight.MenuItems;
+import com.pluralsight.System.MenuItems;
 import com.pluralsight.Options.Bread;
 import com.pluralsight.System.Customizable;
 import com.pluralsight.Toppings.Topping;
