@@ -25,8 +25,8 @@ public abstract class MenuItems {
     /*
     Core Methods
    - CalculatePrice - Done
-   - addTopping
-   - removeTopping
+   - addTopping - put into interface
+   - removeTopping - put into interface
      */
 
     public double calculatePrice(){
@@ -45,24 +45,7 @@ public abstract class MenuItems {
         }
         return total;
     }
-    // --- Add a topping ---
-    public void addTopping(Topping topping) {
-        if (topping != null) {
-            toppings.add(topping);
-            System.out.println("Added topping: " + topping.getName());
-        } else {
-            System.out.println("Invalid topping.");
-        }
-    }
-
-    // --- Remove a topping by name ---
-    public void removeTopping(String toppingName) {
-        boolean removed = toppings.removeIf(t -> t.getName().equalsIgnoreCase(toppingName));
-        if (removed) {
-            System.out.println("Removed topping: " + toppingName);
-        } else {
-            System.out.println("Topping not found: " + toppingName);
-        }
-    }
 
 }
+
+

@@ -1,26 +1,81 @@
 package com.pluralsight.Food;
 
 import com.pluralsight.MenuItems;
+import com.pluralsight.Options.Bread;
+import com.pluralsight.System.Customizable;
 import com.pluralsight.Toppings.Topping;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Burger extends MenuItems {
-    private String bread;
-    private List<Topping> proteins;
-    private List<Topping> veggies;
-    private List<Topping> cheeses;
-    private List<Topping> sauces;
+public class Burger extends MenuItems implements Customizable {
 
-    public Burger(String name, String size, double basePrice, String bread, String notes) {
+    private Bread bread;
+    private List<Topping> toppings; // Each burger can have its own topping list
+
+    public Burger(String name, String size, double basePrice, Bread bread, String notes) {
         super(name, size, basePrice, notes);
         this.bread = bread;
-        this.proteins = new ArrayList<>();
-        this.veggies = new ArrayList<>();
-        this.cheeses = new ArrayList<>();
-        this.sauces = new ArrayList<>();
+        this.toppings = new ArrayList<>();
     }
 
+    public Bread getBread() {
+        return bread;
+    }
 
+    public void setBread(Bread bread) {
+        this.bread = bread;
+    }
+
+    @Override
+    public double calculatePrice() {
+        double total = basePrice;
+
+        // Add premium cost from enum (e.g., Pretzel Roll +$2)
+        total += bread.getExtraCost();
+
+        // Add topping prices
+        int basicCount = 0;
+        for (Topping topping : toppings) {
+            if (topping.getTier().equalsIgnoreCase("Basic")) {
+                basicCount++;
+                if (basicCount > 3) {
+                    total += 0.50;
+                }
+            } else {
+                total += topping.getBasePrice();
+            }
+        }
+
+        return total;
+    }
+
+    // ---- Customizable interface methods ----
+
+    @Override
+    public void addTopping(Topping topping) {
+        toppings.add(topping);
+        System.out.println(topping.getName() + " added to your burger!");
+    }
+
+    @Override
+    public void removeTopping(String toppingName) {
+        toppings.removeIf(t -> t.getName().equalsIgnoreCase(toppingName));
+        System.out.println(toppingName + " removed from your burger.");
+    }
+
+    @Override
+    public List<Topping> getToppings() {
+        return toppings;
+    }
+
+    @Override
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    @Override
+    public String getSize() {
+        return size;
+    }
 }

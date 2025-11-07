@@ -1,4 +1,22 @@
 package com.pluralsight.Options;
 
-public class Bread{
+public enum Bread {
+    PITA("Pita Bread", 0.0, "Basic"),
+    PRETZEL("Pretzel Roll", 2.0, "Premium"),
+    BRIOCHE("Brioche Bun", 0.0, "Basic");
+
+    private final String displayName;
+    private final double extraCost;
+    private final String tier;
+
+    // Constructor MUST match enum name
+    Bread(String displayName, double extraCost, String tier) {
+        this.displayName = displayName;
+        this.extraCost = extraCost;
+        this.tier = tier;
+    }
+
+    public String getDisplayName() { return displayName; }
+    public double getExtraCost() { return extraCost; }
+    public String getTier() { return tier; }
 }
