@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public abstract class MenuItems {
-    protected String name;
+    public String name;
     protected String size;
     protected double basePrice;
     protected List<Topping> toppings;
@@ -20,6 +20,26 @@ public abstract class MenuItems {
         this.basePrice = price;
         this.toppings = new ArrayList<>();
         this.notes = notes;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public double getBasePrice() {
+        return basePrice;
+    }
+
+    public List<Topping> getToppings() {
+        return toppings;
+    }
+
+    public String getNotes() {
+        return notes;
     }
 
     public double calculatePrice(){
@@ -37,6 +57,9 @@ public abstract class MenuItems {
             }
         }
         return total;
+    }
+    public String displayName() {
+        return name; // safely exposes the item name for UI
     }
 
 }

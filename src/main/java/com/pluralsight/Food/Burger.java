@@ -29,25 +29,21 @@ public class Burger extends MenuItems implements Customizable {
 
     @Override
     public double calculatePrice() {
-        double total = basePrice;
+        double total = basePrice + bread.getExtraCost();
 
-        // Add premium cost from enum (e.g., Pretzel Roll +$2)
-        total += bread.getExtraCost();
+        long basicCount = toppings.stream()
+                .filter(t -> t.getTier().equalsIgnoreCase("Basic"))
+                .count();
 
-        // Add topping prices
-        int basicCount = 0;
-        for (Topping topping : toppings) {
-            if (topping.getTier().equalsIgnoreCase("Basic")) {
-                basicCount++;
-                if (basicCount > 3) {
-                    total += 0.50;
-                }
-            } else {
-                total += topping.getBasePrice();
-            }
-        }
+        // First 3 basics free, rest $0.50 each
+        double extraBasicCost = Math.max(0, basicCount - 3) * 0.50;
 
-        return total;
+        double premiumCost = toppings.stream()
+                .filter(t -> !t.getTier().equalsIgnoreCase("Basic"))
+                .mapToDouble(Topping::getBasePrice)
+                .sum();
+
+        return total + extraBasicCost + premiumCost;
     }
 
     // ---- Customizable interface methods ----
@@ -77,5 +73,13 @@ public class Burger extends MenuItems implements Customizable {
     @Override
     public String getSize() {
         return size;
+    }
+    public String toString() {
+        return String.format(
+                "Burger: %s (%s)\nBread: %s\nToppings: %s\nPrice: $%.2f\nNotes: %s",
+                name, size, bread.getDisplayName(),
+                toppings.isEmpty() ? "None" : toppings.stream().map(Topping::getName).toList(),
+                calculatePrice(), notes
+        );
     }
 }
