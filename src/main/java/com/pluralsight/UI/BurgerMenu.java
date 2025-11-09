@@ -1,4 +1,4 @@
 package com.pluralsight.UI;
 
-public class Banner {
+public class BurgerMenu {
 }
