@@ -1,9 +1,10 @@
 package com.pluralsight.Food;
 
+import com.pluralsight.Options.Size;
 import com.pluralsight.System.MenuItems;
 import com.pluralsight.Options.Bread;
 import com.pluralsight.System.Customizable;
-import com.pluralsight.Toppings.Topping;
+import com.pluralsight.Options.Topping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,14 +12,16 @@ import java.util.List;
 public class Burger extends MenuItems implements Customizable {
 
     private Bread bread;
-    private final List<Topping> toppings; // Each burger can have its own topping list
+    private final List<Topping> toppings; // Each burger has its own topping list
 
-    public Burger(String name, String size, double basePrice, Bread bread, String notes) {
-        super(name, size, basePrice, notes);
+    // ---- Constructor ----
+    public Burger(String name, Size size, double basePrice, Bread bread, String notes) {
+        super(name, String.valueOf(size), basePrice, notes);
         this.bread = bread;
         this.toppings = new ArrayList<>();
     }
 
+    // ---- Getters & Setters ----
     public Bread getBread() {
         return bread;
     }
@@ -27,6 +30,17 @@ public class Burger extends MenuItems implements Customizable {
         this.bread = bread;
     }
 
+    @Override
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    @Override
+    public String getSize() {
+        return size;
+    }
+
+    // ---- Price Calculation ----
     @Override
     public double calculatePrice() {
         double total = basePrice + bread.getExtraCost();
@@ -47,7 +61,6 @@ public class Burger extends MenuItems implements Customizable {
     }
 
     // ---- Customizable interface methods ----
-
     @Override
     public void addTopping(Topping topping) {
         toppings.add(topping);
@@ -65,20 +78,16 @@ public class Burger extends MenuItems implements Customizable {
         return toppings;
     }
 
+    // ---- Display burger nicely ----
     @Override
-    public void setSize(String size) {
-        this.size = size;
-    }
-
-    @Override
-    public String getSize() {
-        return size;
-    }
     public String toString() {
+        String toppingNames = toppings.isEmpty() ? "None"
+                : toppings.stream().map(Topping::getName).toList().toString();
+
         return String.format(
                 "Burger: %s (%s)\nBread: %s\nToppings: %s\nPrice: $%.2f\nNotes: %s",
                 name, size, bread.getDisplayName(),
-                toppings.isEmpty() ? "None" : toppings.stream().map(Topping::getName).toList(),
+                toppingNames,
                 calculatePrice(), notes
         );
     }

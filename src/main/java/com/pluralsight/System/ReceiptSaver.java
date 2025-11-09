@@ -7,13 +7,6 @@ import java.time.format.DateTimeFormatter;
 
 public class ReceiptSaver {
 
-    /*
-    When the customer completes the order, the order details should be saved to a
-    receipts' folder. Each order should have its own receipt file, and it should be
-    named by the date and time that the order was placed
-    (yyyyMMdd-hhmmss.txt - i.e. 20230329-121523.txt)
-     */
-
     public static void saveReceipt(String receiptContent) {
         try {
             // Make a timestamped filename

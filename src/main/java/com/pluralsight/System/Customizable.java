@@ -1,6 +1,6 @@
 package com.pluralsight.System;
 
-import com.pluralsight.Toppings.Topping;
+import com.pluralsight.Options.Topping;
 import java.util.List;
 
 public interface Customizable {
@@ -21,8 +21,6 @@ public interface Customizable {
             for (Topping t : toppings) {
                 System.out.println(" - " + t.getName() + " ($" + t.getBasePrice() + ")");
             }
-
-
         }
     }
 }

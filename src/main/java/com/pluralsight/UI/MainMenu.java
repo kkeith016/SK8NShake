@@ -1,5 +1,7 @@
 package com.pluralsight.UI;
 
+import com.pluralsight.System.Cart;
+
 import java.util.Scanner;
 
 public class MainMenu {
@@ -7,6 +9,7 @@ public class MainMenu {
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void displayMainMenu() {
+        Cart cart = new Cart(); // shared cart instance
         int choice;
 
         do {
@@ -33,7 +36,7 @@ public class MainMenu {
             choice = getIntInput();
 
             switch (choice) {
-                case 1 -> BurgerMenu.display();
+                case 1 -> BurgerMenu.display(cart);
                 case 2 -> NachoMenu.display();
                 case 3 -> PizzaMenu.display();
                 case 4 -> MilkshakeMenu.display();
