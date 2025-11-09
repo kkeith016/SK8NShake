@@ -1,30 +1,30 @@
 package com.pluralsight.UI;
 
-import com.pluralsight.Food.Burger;
+import com.pluralsight.Food.Sandwich;
 import com.pluralsight.System.Cart;
 import com.pluralsight.Options.*;
 
 import java.util.List;
 import java.util.Scanner;
 
-public class BurgerMenu {
+public class SandwichMenu {
 
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void display(Cart cart) {
-        // Create a new burger with default values
-        Burger burger = new Burger("Custom Burger", Size.SMALL, 5.00, Bread.PITA, "");
+        // Create a new sandwich with default values
+        Sandwich sandwich = new Sandwich("Custom Sandwich", Size.SMALL, 5.00, Bread.PITA, "");
 
         boolean running = true;
 
         while (running) {
-            System.out.println(UIColors.NEON_PINK + "===================== BURGER MENU =====================" + UIColors.RESET);
+            System.out.println(UIColors.NEON_PINK + "===================== SANDWICH MENU =====================" + UIColors.RESET);
             System.out.println(UIColors.NEON_YELLOW + """
                 1) Choose Size
                 2) Choose Bread
                 3) Choose Protein
                 4) Add Toppings
-                5) Preview Burger
+                5) Preview Sandwich
                 6) Add to Cart
                 7) Return to Main Menu
                 """ + UIColors.RESET);
@@ -33,14 +33,14 @@ public class BurgerMenu {
             int choice = getIntInput();
 
             switch (choice) {
-                case 1 -> chooseSize(burger);
-                case 2 -> chooseBread(burger);
-                case 3 -> chooseProtein(burger);
-                case 4 -> addToppings(burger);
-                case 5 -> previewBurger(burger);
+                case 1 -> chooseSize(sandwich);
+                case 2 -> chooseBread(sandwich);
+                case 3 -> chooseProtein(sandwich);
+                case 4 -> addToppings(sandwich);
+                case 5 -> previewSandwich(sandwich);
                 case 6 -> {
-                    cart.addItem(burger);
-                    System.out.println(UIColors.NEON_BLUE + "Burger added to cart!" + UIColors.RESET);
+                    cart.addItem(sandwich);
+                    System.out.println(UIColors.NEON_BLUE + "Sandwich added to cart!" + UIColors.RESET);
                     running = false;
                 }
                 case 7 -> running = false;
@@ -49,39 +49,40 @@ public class BurgerMenu {
         }
     }
 
-    private static void chooseSize(Burger burger) {
+    private static void chooseSize(Sandwich sandwich) {
         System.out.println("Select Size:");
         for (Size s : Size.values()) {
-            System.out.println(s.ordinal() + 1 + ") " + s.name());
+            System.out.println(s.ordinal() + 1 + ") " + s.getDisplayName());
         }
         int choice = getIntInput();
         if (choice > 0 && choice <= Size.values().length) {
-            burger.setSize(String.valueOf(Size.values()[choice - 1]));
-            System.out.println("Size set to " + burger.getSize());
+            sandwich.setSize(Size.values()[choice - 1]); // ✅ now passing Size, not String
+            System.out.println("Size set to " + sandwich.getSize().getDisplayName());
         } else {
             System.out.println("\u001B[91mInvalid choice.\u001B[0m");
         }
     }
 
-    private static void chooseBread(Burger burger) {
+    private static void chooseBread(Sandwich sandwich) {
         System.out.println("Select Bread:");
         for (Bread b : Bread.values()) {
             System.out.println(b.ordinal() + 1 + ") " + b.getDisplayName() + " ($" + b.getExtraCost() + ")");
         }
         int choice = getIntInput();
         if (choice > 0 && choice <= Bread.values().length) {
-            burger.setBread(Bread.values()[choice - 1]);
-            System.out.println("Bread set to " + burger.getBread().getDisplayName());
+            sandwich.setBread(Bread.values()[choice - 1]);
+            System.out.println("Bread set to " + sandwich.getBread().getDisplayName());
         } else {
             System.out.println("\u001B[91mInvalid choice.\u001B[0m");
         }
     }
 
-    private static void chooseProtein(Burger burger) {
+    private static void chooseProtein(Sandwich sandwich) {
         System.out.println("Select Protein:");
         List<Protein> proteins = ProteinLibrary.getAllProteins().stream()
-                .filter(p -> p.isValidFor("Burger"))
+                .filter(p -> p.isValidFor("Sandwich"))
                 .toList();
+
         for (int i = 0; i < proteins.size(); i++) {
             Protein p = proteins.get(i);
             System.out.println((i + 1) + ") " + p.getName() + " ($" + p.getBasePrice() + ")");
@@ -90,20 +91,24 @@ public class BurgerMenu {
         int choice = getIntInput();
         if (choice > 0 && choice <= proteins.size()) {
             Protein selected = proteins.get(choice - 1);
-            burger.addTopping(new Topping(selected.getName(), "Meat", selected.getTier(), selected.getBasePrice(), List.of("Burger")));
+            sandwich.addTopping(new Topping(
+                    selected.getName(),
+                    "Meat",
+                    selected.getTier(),
+                    selected.getBasePrice(),
+                    List.of("Sandwich")
+            ));
             System.out.println("Protein set to " + selected.getName());
         } else {
             System.out.println("\u001B[91mInvalid choice.\u001B[0m");
         }
     }
 
-    private static void addToppings(Burger burger) {
-
+    private static void addToppings(Sandwich sandwich) {
         List<Topping> validToppings = ToppingsLibrary.getAllToppings().stream()
-                .filter(t -> t.isValidFor("Burger"))
+                .filter(t -> t.isValidFor("Sandwich"))
                 .toList();
 
-        // Group toppings by category
         List<String> categories = List.of("Cheese", "Veggie", "Sauce", "Add-On", "Vegan", "Mix-In");
 
         for (String category : categories) {
@@ -126,7 +131,7 @@ public class BurgerMenu {
                     try {
                         int index = Integer.parseInt(part.trim()) - 1;
                         if (index >= 0 && index < catToppings.size()) {
-                            burger.addTopping(catToppings.get(index));
+                            sandwich.addTopping(catToppings.get(index));
                         }
                     } catch (NumberFormatException ignored) {}
                 }
@@ -136,19 +141,18 @@ public class BurgerMenu {
         System.out.println(UIColors.NEON_BLUE + "Finished adding toppings!" + UIColors.RESET);
     }
 
-    private static void previewBurger(Burger burger) {
+    private static void previewSandwich(Sandwich sandwich) {
         System.out.println(UIColors.NEON_PINK + "------------------- SANDWICH PREVIEW -------------------" + UIColors.RESET);
 
-        double mainPrice = burger.getBasePrice() + burger.getBread().getExtraCost();
-        System.out.printf("1x %s (%s) ............ $%.2f%n", burger.getName(), burger.getSize(), mainPrice);
-        System.out.println("Bread: " + burger.getBread().getDisplayName());
+        double mainPrice = sandwich.getBasePrice() + sandwich.getBread().getExtraCost();
+        System.out.printf("1x %s (%s) ............ $%.2f%n", sandwich.getName(), sandwich.getSize().getDisplayName(), mainPrice);
+        System.out.println("Bread: " + sandwich.getBread().getDisplayName());
 
-        // Print toppings with individual prices
-        for (Topping t : burger.getToppings()) {
+        for (Topping t : sandwich.getToppings()) {
             System.out.printf("   + %-25s $%.2f%n", t.getName(), t.getBasePrice());
         }
 
-        System.out.printf("Total Price: $%.2f%n", burger.calculatePrice());
+        System.out.printf("Total Price: $%.2f%n", sandwich.calculatePrice());
         System.out.println(UIColors.NEON_PINK + "-----------------------------------------------------" + UIColors.RESET);
     }
 

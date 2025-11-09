@@ -7,10 +7,8 @@ public interface Customizable {
     void addTopping(Topping topping);
     void removeTopping(String toppingName);
     List<Topping> getToppings();
-    void setSize(String size);
-    String getSize();
-
-    //Display toppings to the user (For UI)
+    void setSize(com.pluralsight.Options.Size size);
+    com.pluralsight.Options.Size getSize();
 
     default void showToppings() {
         List<Topping> toppings = getToppings();

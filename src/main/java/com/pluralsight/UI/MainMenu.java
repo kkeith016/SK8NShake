@@ -36,7 +36,7 @@ public class MainMenu {
             choice = getIntInput();
 
             switch (choice) {
-                case 1 -> BurgerMenu.display(cart);
+                case 1 -> SandwichMenu.display(cart);
                 case 2 -> NachoMenu.display();
                 case 3 -> PizzaMenu.display();
                 case 4 -> MilkshakeMenu.display();

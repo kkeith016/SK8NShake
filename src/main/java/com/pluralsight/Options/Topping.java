@@ -7,7 +7,7 @@ public class Topping {
     private String category;
     private String tier;
     private double basePrice;
-    private List<String> validFor; //If its valid for Burger, Pizza, Milkshake Nacho
+    private List<String> validFor; //If its valid for Sandwich, Pizza, Milkshake Nacho
 
     public Topping(String name, String category, String tier, double basePrice, List<String> validFor) {
         this.name = name;

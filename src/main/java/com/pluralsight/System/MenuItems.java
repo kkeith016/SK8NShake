@@ -1,67 +1,46 @@
 package com.pluralsight.System;
 
+import com.pluralsight.Options.Size;
 import com.pluralsight.Options.Topping;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class MenuItems {
-    public String name;
-    protected String size;
+    protected String name;
+    protected Size size;
     protected double basePrice;
     protected List<Topping> toppings;
     protected String notes;
 
-    //----Constructor----
-
-    public MenuItems(String name, String size, double price, String notes) {
+    public MenuItems(String name, Size size, double basePrice, String notes) {
         this.name = name;
         this.size = size;
-        this.basePrice = price;
-        this.toppings = new ArrayList<>();
+        this.basePrice = basePrice;
         this.notes = notes;
+        this.toppings = new ArrayList<>();
     }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
+    public Size getSize() { return size; }
+    public void setSize(Size size) { this.size = size; }
+    public double getBasePrice() { return basePrice; }
+    public List<Topping> getToppings() { return toppings; }
+    public String getNotes() { return notes; }
 
-    public String getSize() {
-        return size;
-    }
-
-    public double getBasePrice() {
-        return basePrice;
-    }
-
-    public List<Topping> getToppings() {
-        return toppings;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public double calculatePrice(){
+    public double calculatePrice() {
         double total = basePrice;
-        int basicCount = 0;
+        if (size != null) total += size.getPriceModifier();
 
-        for (Topping topping : toppings) {
-            if (topping.getTier().equalsIgnoreCase("Basic")) {
+        int basicCount = 0;
+        for (Topping t : toppings) {
+            if (t.getTier().equalsIgnoreCase("Basic")) {
                 basicCount++;
-                if (basicCount > 3) {
-                    total += 0.50; // charge for extra basics after 3
-                }
-            } else {
-                total += topping.getBasePrice(); // premium, deluxe, vegan
-            }
+                if (basicCount > 3) total += 0.50;
+            } else total += t.getBasePrice();
         }
         return total;
     }
-    public String displayName() {
-        return name; // safely exposes the item name for UI
-    }
 
+    public String displayName() { return name; }
 }
-
-

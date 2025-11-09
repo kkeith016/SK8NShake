@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class ReceiptSaver {
-
     public static void saveReceipt(String receiptContent) {
         try {
             String timestamp = LocalDateTime.now()

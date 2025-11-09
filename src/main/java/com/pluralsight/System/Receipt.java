@@ -1,11 +1,10 @@
 package com.pluralsight.System;
 
-import com.pluralsight.System.Cart;
-import com.pluralsight.System.MenuItems;
-import com.pluralsight.System.Customizable;
+import com.pluralsight.Options.Topping;
+
+import java.util.List;
 
 public class Receipt {
-
     public static String generateReceipt(Cart cart, int orderNumber) {
         StringBuilder sb = new StringBuilder();
 
@@ -29,10 +28,9 @@ public class Receipt {
             sb.append(String.format("%-35s $%6.2f\n", item.getName(), itemPrice));
 
             if (item instanceof Customizable customizable) {
-                customizable.getToppings().forEach(t ->
-                        sb.append(String.format("   + %-31s $%6.2f\n",
-                                t.getName(), t.getBasePrice()))
-                );
+                for (Topping t : customizable.getToppings()) {
+                    sb.append(String.format("   + %-31s $%6.2f\n", t.getName(), t.getBasePrice()));
+                }
             }
         }
 
