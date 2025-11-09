@@ -42,7 +42,7 @@ public class MainMenu {
                 case 4 -> MilkshakeMenu.display();
                 case 5 -> SidesMenu.display();
                 case 6 -> NeonHitsMenu.display();
-                case 7 -> CheckoutMenu.display();
+                case 7 -> CheckoutMenu.display(cart);
                 case 8 -> System.out.println(UIColors.NEON_PINK + "Thank you for visiting SK8 N’ SHAKE!" + UIColors.RESET);
                 default -> System.out.println("\u001B[91mInvalid choice. Please enter 1–8.\u001B[0m"); // red text for errors
             }

@@ -9,12 +9,10 @@ public class ReceiptSaver {
 
     public static void saveReceipt(String receiptContent) {
         try {
-            // Make a timestamped filename
             String timestamp = LocalDateTime.now()
                     .format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss"));
             String filename = "src/main/resources/receipts/" + timestamp + ".txt";
 
-            // Write the receipt content to the file
             try (FileWriter writer = new FileWriter(filename)) {
                 writer.write(receiptContent);
             }

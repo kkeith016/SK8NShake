@@ -42,7 +42,7 @@ public class Cart {
         return getSubtotal() + getTax(taxRate);
     }
 
-    public void clearCart() {
+    public void clear() {
         items.clear();
     }
 
