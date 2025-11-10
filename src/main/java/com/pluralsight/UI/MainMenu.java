@@ -41,7 +41,7 @@ public class MainMenu {
                 case 2 -> NachoMenu.display();
                 case 3 -> PizzaMenu.display();
                 case 4 -> DrinkMenu.display(cart);
-                case 5 -> MilkshakeMenu.display();
+                case 5 -> MilkshakeMenu.display(cart);
                 case 6 -> SidesMenu.display(cart);
                 case 7 -> NeonHitsMenu.display();
                 case 8 -> CheckoutMenu.display(cart);

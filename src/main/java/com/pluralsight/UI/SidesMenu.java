@@ -71,7 +71,6 @@ public class SidesMenu {
             cart.addItem(selected);
             System.out.println(UIColors.NEON_BLUE + selected.getName() + " added to cart!" + UIColors.RESET);
 
-            // 🥤 Offer a drink after side added
             PromptDrink.askForDrink(cart);
         } else {
             System.out.println(UIColors.NEON_PINK + "Invalid choice. Try again." + UIColors.RESET);
