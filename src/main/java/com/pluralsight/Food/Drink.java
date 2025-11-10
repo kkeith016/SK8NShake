@@ -9,7 +9,12 @@ public class Drink extends MenuItems {
 
     public Drink(String name, Size size, double basePrice, String flavor) {
         super(name, size, basePrice, "");
-        this.flavor = flavor != null && !flavor.isBlank() ? flavor : "Original";
+
+        if (flavor != null && !flavor.isBlank()) {
+            this.flavor = flavor;
+        } else {
+            this.flavor = "Original";
+        }
     }
 
     public String getFlavor() { return flavor; }
@@ -21,6 +26,11 @@ public class Drink extends MenuItems {
     }
 
     public String preview() {
+        String sizeName = "None";
+        if (getSize() != null) {
+            sizeName = getSize().getDisplayName();
+        }
+
         return String.format(
                 "------------------- DRINK PREVIEW -------------------\n" +
                         "Drink: %s (%s)\n" +
@@ -28,7 +38,7 @@ public class Drink extends MenuItems {
                         "Price: $%.2f\n" +
                         "-----------------------------------------------------\n",
                 getName(),
-                getSize().getDisplayName(),
+                sizeName,
                 flavor,
                 calculatePrice()
         );
@@ -36,7 +46,12 @@ public class Drink extends MenuItems {
 
     @Override
     public String toString() {
+        String sizeName = "None";
+        if (getSize() != null) {
+            sizeName = getSize().getDisplayName();
+        }
+
         return String.format("%s (%s) - %s - $%.2f",
-                getName(), getSize().getDisplayName(), flavor, calculatePrice());
+                getName(), sizeName, flavor, calculatePrice());
     }
 }

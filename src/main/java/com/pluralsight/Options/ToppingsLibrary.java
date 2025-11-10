@@ -44,15 +44,16 @@ public class ToppingsLibrary {
                 new Topping("Peanut Butter Swirl", "Sweet Sauce", "Premium", 1.00, List.of("Milkshake")),
                 new Topping("Fruit Add-In", "Mix-In", "Premium", 1.00, List.of("Milkshake")),
                 new Topping("Protein Boost", "Mix-In", "Premium", 1.00, List.of("Milkshake")),
+                new Topping("Liquid Queso", "Cheese", "Premium", 1.00, List.of("Nacho")),
 
                 // === Deluxe (+$2) ===
                 new Topping("Brisket", "Meat", "Deluxe", 2.00, List.of("Sandwich", "Pizza")),
                 new Topping("Fudge", "Sweet Sauce", "Deluxe", 2.00, List.of("Milkshake")),
                 new Topping("Combo Mix-Ins", "Mix-In", "Deluxe", 2.50, List.of("Milkshake")),
-                new Topping("Extra Cheese", "Add-On", "Deluxe", 2.00, List.of("Sandwich", "Pizza")),
-                new Topping("Pulled Pork", "Meat", "Deluxe", 2.50, List.of("Sandwich", "Pizza")),
+                new Topping("Extra Cheese", "Add-On", "Deluxe", 2.00, List.of("Sandwich", "Pizza","Nachos")),
+                new Topping("Pulled Pork", "Meat", "Deluxe", 2.50, List.of("Sandwich", "Pizza","Nacho")),
                 new Topping("Caramelized Onions", "Veggie", "Deluxe", 2.00, List.of("Sandwich", "Pizza")),
-                new Topping("Avocado Slices", "Add-On", "Deluxe", 2.00, List.of("Sandwich", "Pizza")),
+                new Topping("Extra Meat", "Add-On", "Deluxe", 2.00, List.of("Sandwich", "Pizza","Nacho")),
                 new Topping("Nutella Drizzle", "Sweet Sauce", "Deluxe", 2.50, List.of("Milkshake")),
 
                 // === Vegan Options ===

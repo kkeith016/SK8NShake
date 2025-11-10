@@ -26,6 +26,7 @@ public class Sandwich extends MenuItems implements Customizable {
 
     @Override
     public void setSize(Size size) { this.size = size; }
+
     @Override
     public Size getSize() { return size; }
 
@@ -46,21 +47,57 @@ public class Sandwich extends MenuItems implements Customizable {
 
     @Override
     public double calculatePrice() {
-        double total = basePrice + (bread != null ? bread.getExtraCost() : 0);
+        double total = basePrice;
 
-        long basicCount = toppings.stream().filter(t -> t.getTier().equalsIgnoreCase("Basic")).count();
-        double extraBasicCost = Math.max(0, basicCount - 3) * 0.50;
-        double premiumCost = toppings.stream().filter(t -> !t.getTier().equalsIgnoreCase("Basic"))
-                .mapToDouble(Topping::getBasePrice).sum();
+        // Add bread extra cost if bread exists
+        if (bread != null) {
+            total += bread.getExtraCost();
+        }
 
-        return total + extraBasicCost + premiumCost + (size != null ? size.getPriceModifier() : 0);
+        // Count Basic toppings
+        int basicCount = (int) toppings.stream()
+                .filter(t -> t.getTier().equalsIgnoreCase("Basic"))
+                .count();
+
+        // Extra cost for Basic toppings over 3
+        double extraBasicCost = 0;
+        if (basicCount > 3) {
+            extraBasicCost = (basicCount - 3) * 0.50;
+        }
+
+        // Sum price of non-Basic toppings
+        double premiumCost = toppings.stream()
+                .filter(t -> !t.getTier().equalsIgnoreCase("Basic"))
+                .mapToDouble(Topping::getBasePrice)
+                .sum();
+
+        // Add size modifier if size exists
+        double sizeModifier = 0;
+        if (size != null) {
+            sizeModifier = size.getPriceModifier();
+        }
+
+        return total + extraBasicCost + premiumCost + sizeModifier;
     }
 
     @Override
     public String toString() {
-        String toppingNames = toppings.isEmpty()
-                ? "None"
-                : toppings.stream().map(Topping::getName).collect(Collectors.joining(", "));
+        String toppingNames = "None";
+        if (!toppings.isEmpty()) {
+            toppingNames = toppings.stream()
+                    .map(Topping::getName)
+                    .collect(Collectors.joining(", "));
+        }
+
+        String displaySize = "None";
+        if (size != null) {
+            displaySize = size.getDisplayName();
+        }
+
+        String displayBread = "None";
+        if (bread != null) {
+            displayBread = bread.getDisplayName();
+        }
 
         return String.format("""
                 Sandwich: %s (%s)
@@ -70,8 +107,8 @@ public class Sandwich extends MenuItems implements Customizable {
                 Notes: %s
                 """,
                 name,
-                size != null ? size.getDisplayName() : "None",
-                bread != null ? bread.getDisplayName() : "None",
+                displaySize,
+                displayBread,
                 toppingNames,
                 calculatePrice(),
                 notes

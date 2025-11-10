@@ -35,15 +35,25 @@ public class Milkshake extends Drink implements Customizable {
     @Override
     public double calculatePrice() {
         double total = super.calculatePrice();
-        for (Topping t : toppings) total += t.getBasePrice();
+        for (Topping t : toppings) {
+            total += t.getBasePrice();
+        }
         return total;
     }
 
     @Override
     public String toString() {
-        String toppingList = toppings.isEmpty()
-                ? "None"
-                : toppings.stream().map(Topping::getName).collect(Collectors.joining(", "));
+        String toppingList = "None";
+        if (!toppings.isEmpty()) {
+            toppingList = toppings.stream()
+                    .map(Topping::getName)
+                    .collect(Collectors.joining(", "));
+        }
+
+        String sizeName = "None";
+        if (getSize() != null) {
+            sizeName = getSize().getDisplayName();
+        }
 
         return String.format("""
                 Milkshake: %s (%s)
@@ -52,7 +62,7 @@ public class Milkshake extends Drink implements Customizable {
                 Price: $%.2f
                 """,
                 getName(),
-                getSize().getDisplayName(),
+                sizeName,
                 super.getFlavor(),
                 toppingList,
                 calculatePrice()

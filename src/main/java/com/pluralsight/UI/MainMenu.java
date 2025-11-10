@@ -14,19 +14,19 @@ public class MainMenu {
 
         do {
             System.out.println(UIColors.NEON_PINK + "===========================================================" + UIColors.RESET);
-            System.out.println(UIColors.NEON_PINK + "                     WELCOME TO SK8 N’ SHAKE" + UIColors.RESET);
+            System.out.println(UIColors.NEON_PINK + "                   WELCOME TO SK8 N’ SHAKE" + UIColors.RESET);
             System.out.println(UIColors.NEON_PINK + "===========================================================" + UIColors.RESET);
 
             System.out.println(UIColors.NEON_BLUE + "             Slide into flavor with our signature picks!\n" + UIColors.RESET);
 
             System.out.println(UIColors.NEON_YELLOW + """
-                1) Sandwich Menu
-                2) Nacho Menu
-                3) Pizza Menu
+                1) Sandwich
+                2) Nacho
+                3) Pizza
                 4) Drinks
-                5) Milkshake Menu
+                5) Milkshake
                 6) Sides
-                7) Neon Hits (Specials)
+                7) Neon Hits
                 8) Check Out
                 9) Exit
                 """ + UIColors.RESET);
