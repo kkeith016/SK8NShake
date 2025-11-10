@@ -10,6 +10,7 @@ public interface Customizable {
     void setSize(com.pluralsight.Options.Size size);
     com.pluralsight.Options.Size getSize();
 
+
     default void showToppings() {
         List<Topping> toppings = getToppings();
         if (toppings.isEmpty()) {
