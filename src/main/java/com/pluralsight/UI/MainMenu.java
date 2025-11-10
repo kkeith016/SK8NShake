@@ -23,15 +23,16 @@ public class MainMenu {
                 1) Sandwich Menu
                 2) Nacho Menu
                 3) Pizza Menu
-                4) Milkshake Menu
-                5) Sides
-                6) Neon Hits (Specials)
-                7) Check Out
-                8) Exit
+                4) Drinks
+                5) Milkshake Menu
+                6) Sides
+                7) Neon Hits (Specials)
+                8) Check Out
+                9) Exit
                 """ + UIColors.RESET);
 
             System.out.println(UIColors.NEON_BLUE + "-----------------------------------------------------------" + UIColors.RESET);
-            System.out.print(UIColors.NEON_GREEN + "Please enter your choice (1–8): " + UIColors.RESET);
+            System.out.print(UIColors.NEON_GREEN + "Please enter your choice (1–9): " + UIColors.RESET);
 
             choice = getIntInput();
 
@@ -39,15 +40,16 @@ public class MainMenu {
                 case 1 -> SandwichMenu.display(cart);
                 case 2 -> NachoMenu.display();
                 case 3 -> PizzaMenu.display();
-                case 4 -> MilkshakeMenu.display();
-                case 5 -> SidesMenu.display();
-                case 6 -> NeonHitsMenu.display();
-                case 7 -> CheckoutMenu.display(cart);
-                case 8 -> System.out.println(UIColors.NEON_PINK + "Thank you for visiting SK8 N’ SHAKE!" + UIColors.RESET);
-                default -> System.out.println("\u001B[91mInvalid choice. Please enter 1–8.\u001B[0m"); // red text for errors
+                case 4 -> DrinkMenu.display(cart);
+                case 5 -> MilkshakeMenu.display();
+                case 6 -> SidesMenu.display(cart);
+                case 7 -> NeonHitsMenu.display();
+                case 8 -> CheckoutMenu.display(cart);
+                case 9 -> System.out.println(UIColors.NEON_PINK + "Thank you for visiting SK8 N’ SHAKE!" + UIColors.RESET);
+                default -> System.out.println("\u001B[91mInvalid choice. Please enter 1–9.\u001B[0m"); // red text for errors
             }
 
-        } while (choice != 8);
+        } while (choice != 9);
     }
 
     private static int getIntInput() {

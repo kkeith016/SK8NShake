@@ -1,9 +1,6 @@
 package com.pluralsight.Options;
 
 import com.pluralsight.Food.Drink;
-import com.pluralsight.Options.Size;
-
-
 import java.util.List;
 
 public class DrinkLibrary{
@@ -24,7 +21,11 @@ public class DrinkLibrary{
 
                 new Drink("Milkshake", Size.SMALL, 3.50, ""),
                 new Drink("Milkshake", Size.MEDIUM, 4.00, ""),
-                new Drink("Milkshake", Size.LARGE, 4.50, "")
+                new Drink("Milkshake", Size.LARGE, 4.50, ""),
+
+                new Drink("Water", Size.SMALL, 0, ""),
+                new Drink("Water", Size.MEDIUM, 0, ""),
+                new Drink("Water", Size.LARGE, 0, "")
         );
     }
 

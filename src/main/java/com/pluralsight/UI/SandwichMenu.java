@@ -41,6 +41,8 @@ public class SandwichMenu {
                 case 6 -> {
                     cart.addItem(sandwich);
                     System.out.println(UIColors.NEON_BLUE + "Sandwich added to cart!" + UIColors.RESET);
+                    // Ask user if they want a drink
+                    PromptDrink.askForDrink(cart);
                     running = false;
                 }
                 case 7 -> running = false;
@@ -56,7 +58,7 @@ public class SandwichMenu {
         }
         int choice = getIntInput();
         if (choice > 0 && choice <= Size.values().length) {
-            sandwich.setSize(Size.values()[choice - 1]); // ✅ now passing Size, not String
+            sandwich.setSize(Size.values()[choice - 1]);
             System.out.println("Size set to " + sandwich.getSize().getDisplayName());
         } else {
             System.out.println("\u001B[91mInvalid choice.\u001B[0m");
