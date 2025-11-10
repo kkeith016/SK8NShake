@@ -9,7 +9,7 @@ public class ToppingsLibrary {
                 // === Basic (+0.10-0.25) ===
                 new Topping("American Cheese", "Cheese", "Basic", 0.10, List.of("Sandwich", "Pizza")),
                 new Topping("Cheddar", "Cheese", "Basic", 0.25, List.of("Sandwich", "Pizza")),
-                new Topping("Lettuce", "Veggie", "Basic", 0.10, List.of("Sandwich")),
+                new Topping("Lettuce", "Veggie", "Basic", 0.10, List.of("Sandwich", "Pizza")),
                 new Topping("Tomato", "Veggie", "Basic", 0.10, List.of("Sandwich", "Pizza")),
                 new Topping("Onion", "Veggie", "Basic", 0.10, List.of("Sandwich", "Pizza")),
                 new Topping("Ketchup", "Sauce", "Basic", 0.10, List.of("Sandwich")),
@@ -42,7 +42,6 @@ public class ToppingsLibrary {
                 new Topping("Brownie Bits", "Mix-In", "Premium", 1.00, List.of("Milkshake")),
                 new Topping("Caramel Drizzle", "Sweet Sauce", "Premium", 1.00, List.of("Milkshake")),
                 new Topping("Peanut Butter Swirl", "Sweet Sauce", "Premium", 1.00, List.of("Milkshake")),
-                new Topping("Fruit Add-In", "Mix-In", "Premium", 1.00, List.of("Milkshake")),
                 new Topping("Protein Boost", "Mix-In", "Premium", 1.00, List.of("Milkshake")),
                 new Topping("Liquid Queso", "Cheese", "Premium", 1.00, List.of("Nacho")),
 
@@ -55,11 +54,9 @@ public class ToppingsLibrary {
                 new Topping("Caramelized Onions", "Veggie", "Deluxe", 2.00, List.of("Sandwich", "Pizza")),
                 new Topping("Extra Meat", "Add-On", "Deluxe", 2.00, List.of("Sandwich", "Pizza","Nacho")),
                 new Topping("Nutella Drizzle", "Sweet Sauce", "Deluxe", 2.50, List.of("Milkshake")),
-
-                // === Vegan Options ===
-                new Topping("Daiya Cheese", "Vegan", "Vegan", 1.00, List.of("Pizza", "Sandwich")),
-                new Topping("Impossible Meat", "Vegan", "Vegan", 2.00, List.of("Sandwich", "Pizza")),
-                new Topping("Vegan Combo", "Vegan", "Vegan", 2.00, List.of("Sandwich", "Pizza"))
+                new Topping("Daiya Cheese", "Cheese", "Deluxe", 1.00, List.of("Pizza", "Sandwich","Nachos")),
+                new Topping("Impossible Meat Crumble", "Meat", "Deluxe", 2.00, List.of("Pizza","Nachos")),
+                new Topping("Vegan Combo (Plant Based Cheese&Meat)", "Add On", "Vegan", 2.00, List.of("Sandwich", "Pizza","Nacho"))
         );
     }
 }
