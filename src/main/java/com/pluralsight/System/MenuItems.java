@@ -11,6 +11,8 @@ public abstract class MenuItems {
     protected Size size;
     protected double basePrice;
     protected List<Topping> toppings;
+    protected int extraBasicCount;      // How many basic toppings cost extra
+    protected double extraBasicCharge;  // Total charge for extras
     protected String notes;
 
     public MenuItems(String name, Size size, double basePrice, String notes) {
@@ -28,19 +30,36 @@ public abstract class MenuItems {
     public List<Topping> getToppings() { return toppings; }
     public String getNotes() { return notes; }
 
+    public int getExtraBasicCount() { return extraBasicCount; }
+    public double getExtraBasicCharge() { return extraBasicCharge; }
+
     public double calculatePrice() {
         double total = basePrice;
+        extraBasicCount = 0;     // Reset each time the price is calculated
+        extraBasicCharge = 0.0;
+
         if (size != null) total += size.getPriceModifier();
 
         int basicCount = 0;
         for (Topping t : toppings) {
             if (t.getTier().equalsIgnoreCase("Basic")) {
                 basicCount++;
-                if (basicCount > 3) total += 0.50;
-            } else total += t.getBasePrice();
+                // ✅ First 3 basic toppings are free
+                if (basicCount > 3) {
+                    total += 0.50;
+                    extraBasicCount++;
+                    extraBasicCharge += 0.50;
+                }
+            } else {
+                // Premium toppings add their base price
+                total += t.getBasePrice();
+            }
         }
+
         return total;
     }
 
-    public String displayName() { return name; }
+    public String displayName() {
+        return name;
+    }
 }

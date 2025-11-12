@@ -1,25 +1,30 @@
 package com.pluralsight.System;
 
+import com.pluralsight.Options.Size;
 import com.pluralsight.Options.Topping;
 import java.util.List;
 
 public interface Customizable {
+
+    // ---- Core behavior for customizable menu items ----
     void addTopping(Topping topping);
     void removeTopping(String toppingName);
     List<Topping> getToppings();
-    void setSize(com.pluralsight.Options.Size size);
-    com.pluralsight.Options.Size getSize();
 
+    void setSize(Size size);
+    Size getSize();
 
+    // ---- Default helper method to show toppings ----
     default void showToppings() {
         List<Topping> toppings = getToppings();
-        if (toppings.isEmpty()) {
-            System.out.println("No toppings found");
-        } else {
-            System.out.println("Current toppings:");
-            for (Topping t : toppings) {
-                System.out.println(" - " + t.getName() + " ($" + t.getBasePrice() + ")");
-            }
+        if (toppings == null || toppings.isEmpty()) {
+            System.out.println("No toppings added.");
+            return;
         }
+
+        System.out.println("Current toppings:");
+        toppings.forEach(t ->
+                System.out.printf(" - %s ($%.2f)%n", t.getName(), t.getBasePrice())
+        );
     }
 }
