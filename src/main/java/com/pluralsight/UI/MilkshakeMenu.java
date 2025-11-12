@@ -12,7 +12,6 @@ public class MilkshakeMenu {
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void display(Cart cart) {
-        // Create a new milkshake with default values
         Milkshake milkshake = new Milkshake("Custom Milkshake", Size.SMALL, 4.00);
 
         boolean running = true;

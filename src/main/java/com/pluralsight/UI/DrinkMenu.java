@@ -13,7 +13,6 @@ public class DrinkMenu {
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void display(Cart cart) {
-        // Step 1: Select Drink Type
         List<String> drinkTypes = List.of("Soda", "Lemonade", "Iced Tea", "Water");
         System.out.println(UIColors.NEON_PINK + "===================== DRINK MENU =====================" + UIColors.RESET);
 
@@ -32,7 +31,6 @@ public class DrinkMenu {
 
         String selectedDrink = drinkTypes.get(drinkChoice - 1);
 
-        // Step 2: Select Size
         System.out.println("Select Size:");
         for (Size s : Size.values()) {
             System.out.println(s.ordinal() + 1 + ") " + s.getDisplayName() + " (+$" + s.getPriceModifier() + ")");

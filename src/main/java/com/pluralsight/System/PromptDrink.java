@@ -1,6 +1,6 @@
-package com.pluralsight.UI;
+package com.pluralsight.System;
 
-import com.pluralsight.System.Cart;
+import com.pluralsight.UI.DrinkMenu;
 
 import java.util.Scanner;
 
