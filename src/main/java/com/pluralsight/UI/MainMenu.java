@@ -38,8 +38,8 @@ public class MainMenu {
 
             switch (choice) {
                 case 1 -> SandwichMenu.display(cart);
-                case 2 -> NachoMenu.display();
-                case 3 -> PizzaMenu.display();
+                case 2 -> NachoMenu.display(cart);
+                case 3 -> PizzaMenu.display(cart);
                 case 4 -> DrinkMenu.display(cart);
                 case 5 -> MilkshakeMenu.display(cart);
                 case 6 -> SidesMenu.display(cart);

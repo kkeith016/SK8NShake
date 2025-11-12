@@ -49,23 +49,22 @@ public class Sandwich extends MenuItems implements Customizable {
     public double calculatePrice() {
         double total = basePrice;
 
-        // Add bread extra cost if bread exists
+
         if (bread != null) {
             total += bread.getExtraCost();
         }
 
-        // Count Basic toppings
+
         int basicCount = (int) toppings.stream()
                 .filter(t -> t.getTier().equalsIgnoreCase("Basic"))
                 .count();
 
-        // Extra cost for Basic toppings over 3
+
         double extraBasicCost = 0;
         if (basicCount > 3) {
             extraBasicCost = (basicCount - 3) * 0.50;
         }
 
-        // Sum price of non-Basic toppings
         double premiumCost = toppings.stream()
                 .filter(t -> !t.getTier().equalsIgnoreCase("Basic"))
                 .mapToDouble(Topping::getBasePrice)
