@@ -59,13 +59,8 @@ public class Milkshake extends MenuItems implements Customizable {
     public double calculatePrice() {
         double total = basePrice;
 
-
         if (size != null) total += size.getPriceModifier();
-
-
         if (iceCreamBase != null) total += iceCreamBase.getExtraCost();
-
-
         for (Topping t : getToppings()) total += t.getBasePrice();
 
         return total;

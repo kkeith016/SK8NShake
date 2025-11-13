@@ -53,7 +53,7 @@ public class SandwichMenu {
     private static void chooseBread(Sandwich sandwich) {
         System.out.println("Select Bread:");
         for (Bread b : Bread.values()) {
-            System.out.println((b.ordinal() + 1) + ") " + b.getDisplayName() + " ($" + b.getExtraCost() + ")");
+            System.out.printf("%d) %s ($%.2f)%n", b.ordinal() + 1, b.getDisplayName(), b.getExtraCost());
         }
         int choice = MenuHelper.getIntInput(scanner);
         if (choice > 0 && choice <= Bread.values().length) {
@@ -72,7 +72,7 @@ public class SandwichMenu {
         System.out.println("Select Protein (comma separated for multiple, Enter to skip):");
         for (int i = 0; i < proteins.size(); i++) {
             Protein p = proteins.get(i);
-            System.out.println((i + 1) + ") " + p.getName() + " ($" + p.getBasePrice() + ")");
+            System.out.printf("%d) %s ($%.2f)%n", i + 1, p.getName(), p.getBasePrice());
         }
 
         String input = scanner.nextLine();

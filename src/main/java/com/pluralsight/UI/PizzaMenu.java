@@ -53,7 +53,7 @@ public class PizzaMenu {
     private static void chooseCrust(Pizza pizza) {
         System.out.println("Select Crust:");
         for (Crusts c : Crusts.values()) {
-            System.out.println((c.ordinal() + 1) + ") " + c.getDisplayName() + " ($" + c.getExtraCost() + ")");
+            System.out.printf("%d) %s ($%.2f)%n", c.ordinal() + 1, c.getDisplayName(), c.getExtraCost());
         }
         int choice = MenuHelper.getIntInput(scanner);
         if (choice > 0 && choice <= Crusts.values().length) {

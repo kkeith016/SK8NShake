@@ -19,6 +19,8 @@ public class Drink extends MenuItems {
     public String getFlavor() {
         return flavor;
     }
+    public void setFlavor(String flavor) {
+    }
 
     @Override
     public List<Topping> getToppings() {

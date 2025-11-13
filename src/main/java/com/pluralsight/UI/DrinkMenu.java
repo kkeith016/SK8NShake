@@ -2,6 +2,7 @@ package com.pluralsight.UI;
 
 import com.pluralsight.Food.Drink;
 import com.pluralsight.System.Cart;
+import com.pluralsight.System.MenuHelper;
 import com.pluralsight.Options.DrinkLibrary;
 import com.pluralsight.Options.Size;
 
@@ -13,86 +14,91 @@ public class DrinkMenu {
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void display(Cart cart) {
-        List<String> drinkTypes = List.of("Soda", "Lemonade", "Iced Tea", "Water");
-        System.out.println(UIColors.NEON_PINK + "===================== DRINK MENU =====================" + UIColors.RESET);
+        boolean running = true;
+        Drink selectedDrink = null;
 
-        for (int i = 0; i < drinkTypes.size(); i++) {
-            System.out.println((i + 1) + ") " + drinkTypes.get(i));
-        }
-        System.out.println((drinkTypes.size() + 1) + ") Return to Main Menu");
+        while (running) {
+            System.out.println(UIColors.NEON_PINK + "===================== DRINK MENU =====================" + UIColors.RESET);
+            System.out.println(UIColors.NEON_YELLOW + """
+                1) Show All Drinks
+                2) Choose Drink & Size
+                3) Add Drink to Cart
+                4) Return to Main Menu
+                """ + UIColors.RESET);
 
-        System.out.print(UIColors.NEON_GREEN + "Select a drink: " + UIColors.RESET);
-        int drinkChoice = getIntInput();
+            int choice = MenuHelper.getIntInput(scanner);
 
-        if (drinkChoice < 1 || drinkChoice > drinkTypes.size()) {
-            System.out.println("Returning to Main Menu...");
-            return;
-        }
-
-        String selectedDrink = drinkTypes.get(drinkChoice - 1);
-
-        System.out.println("Select Size:");
-        for (Size s : Size.values()) {
-            System.out.println(s.ordinal() + 1 + ") " + s.getDisplayName() + " (+$" + s.getPriceModifier() + ")");
-        }
-        int sizeChoice = getIntInput();
-        if (sizeChoice < 1 || sizeChoice > Size.values().length) {
-            System.out.println("Invalid size. Returning to Main Menu...");
-            return;
-        }
-        Size selectedSize = Size.values()[sizeChoice - 1];
-
-        // Step 3: Select Flavor
-        List<String> flavors = DrinkLibrary.getFlavorsForDrink(selectedDrink);
-        System.out.println("Select Flavor:");
-        for (int i = 0; i < flavors.size(); i++) {
-            System.out.println((i + 1) + ") " + flavors.get(i));
-        }
-        int flavorChoice = getIntInput();
-        if (flavorChoice < 1 || flavorChoice > flavors.size()) {
-            System.out.println("Invalid flavor. Returning to Main Menu...");
-            return;
-        }
-        String selectedFlavor = flavors.get(flavorChoice - 1);
-
-
-        Drink drink = new Drink(selectedDrink, selectedSize, getBasePrice(selectedDrink, selectedSize), selectedFlavor);
-
-
-        System.out.println(UIColors.NEON_PINK + "------------------- DRINK PREVIEW -------------------" + UIColors.RESET);
-        System.out.printf("%s (%s)\nFlavor: %s\nPrice: $%.2f%n",
-                drink.getName(), drink.getSize().getDisplayName(), drink.getFlavor(), drink.calculatePrice());
-        System.out.println(UIColors.NEON_PINK + "-----------------------------------------------------" + UIColors.RESET);
-
-
-        System.out.print("Add this drink to cart? (Y/N): ");
-        String input = scanner.nextLine().trim().toLowerCase();
-        if (input.equals("y") || input.equals("yes")) {
-            cart.addItem(drink);
-            System.out.println(UIColors.NEON_BLUE + "Drink added to cart!" + UIColors.RESET);
-        } else {
-            System.out.println("Drink not added.");
-        }
-    }
-
-    private static double getBasePrice(String drinkName, Size size) {
-        return DrinkLibrary.getAllDrinks().stream()
-                .filter(d -> d.getName().equalsIgnoreCase(drinkName))
-                .filter(d -> d.getSize() == size)
-                .findFirst()
-                .map(Drink::getBasePrice)
-                .orElse(0.0);
-    }
-
-    private static int getIntInput() {
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            try {
-                System.out.print("> ");
-                return Integer.parseInt(scanner.nextLine().trim());
-            } catch (NumberFormatException e) {
-                System.out.println("\u001B[91mInvalid number. Try again.\u001B[0m");
+            switch (choice) {
+                case 1 -> showAllDrinks();
+                case 2 -> selectedDrink = chooseDrinkAndSize();
+                case 3 -> addSelectedDrinkToCart(cart, selectedDrink);
+                case 4 -> running = false;
+                default -> System.out.println(UIColors.NEON_PINK + "Invalid choice. Try again." + UIColors.RESET);
             }
+        }
+    }
+
+    private static void showAllDrinks() {
+        List<Drink> drinks = DrinkLibrary.getAllDrinks();
+
+        System.out.println(UIColors.NEON_YELLOW + "\n🍹 AVAILABLE DRINKS 🍹" + UIColors.RESET);
+        drinks.forEach(d -> System.out.printf("   %-25s %s ........ $%.2f%n",
+                d.getName(),
+                d.getSize().getDisplayName(),
+                d.getBasePrice()));
+
+        System.out.println();
+    }
+
+    private static Drink chooseDrinkAndSize() {
+        List<Drink> drinks = DrinkLibrary.getAllDrinks();
+
+        System.out.println(UIColors.NEON_YELLOW + "\nSelect a Drink:" + UIColors.RESET);
+        for (int i = 0; i < drinks.size(); i++) {
+            Drink d = drinks.get(i);
+            System.out.printf("%d) %-20s (%s) $%.2f%n", i + 1, d.getName(), d.getSize().getDisplayName(), d.getBasePrice());
+        }
+
+        int choice = MenuHelper.getIntInput(scanner);
+        if (choice > 0 && choice <= drinks.size()) {
+            Drink selected = drinks.get(choice - 1);
+            MenuHelper.chooseSize(selected, scanner);
+
+
+            List<String> flavors = DrinkLibrary.getFlavorsForDrink(selected.getName());
+            if (!flavors.isEmpty()) {
+                System.out.println("Select Flavor:");
+                for (int i = 0; i < flavors.size(); i++) {
+                    System.out.println((i + 1) + ") " + flavors.get(i));
+                }
+                int flavorChoice = MenuHelper.getIntInput(scanner);
+                if (flavorChoice > 0 && flavorChoice <= flavors.size()) {
+                    selected.setFlavor(flavors.get(flavorChoice - 1));
+                }
+            }
+
+            System.out.println(UIColors.NEON_PINK + "------------------- DRINK PREVIEW -------------------" + UIColors.RESET);
+            System.out.printf("%s (%s)\nFlavor: %s\nPrice: $%.2f%n",
+                    selected.getName(),
+                    selected.getSize().getDisplayName(),
+                    selected.getFlavor(),
+                    selected.calculatePrice());
+            System.out.println(UIColors.NEON_PINK + "-----------------------------------------------------" + UIColors.RESET);
+
+            return selected;
+        } else {
+            System.out.println(UIColors.NEON_PINK + "Invalid choice." + UIColors.RESET);
+            return null;
+        }
+    }
+
+    private static void addSelectedDrinkToCart(Cart cart, Drink selectedDrink) {
+        if (selectedDrink != null) {
+            cart.addItem(selectedDrink);
+            System.out.println(UIColors.NEON_BLUE + selectedDrink.getName() +
+                    " added to cart! Size: " + selectedDrink.getSize() + UIColors.RESET);
+        } else {
+            System.out.println(UIColors.NEON_PINK + "No drink selected. Please choose a drink first." + UIColors.RESET);
         }
     }
 }

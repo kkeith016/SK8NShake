@@ -51,8 +51,8 @@ public class NachoMenu {
 
     private static void chooseChips(Nachos nachos) {
         System.out.println("Select Chips:");
-        for (Chips c : Chips.values()) {
-            System.out.println((c.ordinal() + 1) + ") " + c.getDisplayName() + " ($" + c.getExtraCost() + ")");
+        for (Chips ch : Chips.values()) {
+            System.out.printf("%d) %s ($%.2f)%n", ch.ordinal() + 1, ch.getDisplayName(), ch.getExtraCost());
         }
         int choice = MenuHelper.getIntInput(scanner);
         if (choice > 0 && choice <= Chips.values().length) {

@@ -51,7 +51,7 @@ public class MenuHelper {
             System.out.println(UIColors.NEON_YELLOW + "--- " + category + " ---" + UIColors.RESET);
             for (int i = 0; i < catToppings.size(); i++) {
                 Topping t = catToppings.get(i);
-                System.out.println((i + 1) + ") " + t.getName() + " ($" + t.getBasePrice() + ")");
+                System.out.printf("%d) %s ($%.2f)%n", i + 1, t.getName(), t.getBasePrice());
             }
 
             System.out.println("Enter numbers separated by commas to add " + category + " (or press Enter to skip):");
@@ -119,7 +119,7 @@ public class MenuHelper {
 
         if (item instanceof MenuItems mi) {
 
-            System.out.printf("1x %s (%s) ............ $%.2f%n",
+            System.out.printf("   %s (%s) ............ $%.2f%n",
                     mi.getName(),
                     mi.getSize() != null ? mi.getSize().getDisplayName() : "None",
                     mi.calculatePrice());
