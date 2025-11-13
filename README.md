@@ -19,17 +19,17 @@ It allows users to order **sandwiches, pizza, nachos, milkshakes, drinks, and si
 - Preview items **before adding to cart**
 - **Save receipts** to files with timestamps
 
-### Customization & Toppings
+### Customization Interface & Toppings
 - Uses a **Customizable interface** for anything that can have toppings or add-ons
 - Previews show full details of each item including **size, bread/crust/chips/base, and toppings**
 - All items now reflect the **correct pricing** for every topping, without free-tier exceptions
 
-### Enums Everywhere
+### Enums
 - **Size, Bread, Crusts, Chips, IceCreamBase, Topping**
 - Keeps **pricing and display consistent** across all items
 - Makes it **easy to add new menu items or options**
 
-### Receipts
+### Receipts & Saving
 - Built using **StringBuilder**
 - Cleanly formatted with **itemized toppings, bases, bread, crusts, or chips**
 - Shows **subtotal, tax, and total**
