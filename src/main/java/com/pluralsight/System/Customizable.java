@@ -14,7 +14,7 @@ public interface Customizable {
     void setSize(Size size);
     Size getSize();
 
-    // ---- Default helper method to show toppings ----
+
     default void showToppings() {
         List<Topping> toppings = getToppings();
         if (toppings == null || toppings.isEmpty()) {

@@ -32,12 +32,10 @@ public class PromptCombo {
             System.out.println("No side added.");
         }
 
-        // Check if nothing was added
         if (!addedSomething) {
             System.out.println("\nNo drinks or sides were added.");
             if (cart.isEmpty()) {
                 System.out.println("Your order is empty! Please add at least one item.");
-                // Optionally loop back to main order screen or retry combo
             }
         }
     }
