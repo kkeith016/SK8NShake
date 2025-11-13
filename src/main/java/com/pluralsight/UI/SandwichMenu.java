@@ -3,7 +3,7 @@ package com.pluralsight.UI;
 import com.pluralsight.Food.Sandwich;
 import com.pluralsight.System.Cart;
 import com.pluralsight.Options.*;
-import com.pluralsight.System.PromptDrink;
+import com.pluralsight.System.PromptCombo;
 import com.pluralsight.System.MenuHelper;
 
 import java.util.List;
@@ -41,7 +41,7 @@ public class SandwichMenu {
                 case 6 -> {
                     cart.addItem(sandwich);
                     System.out.println(UIColors.NEON_BLUE + "Sandwich added to cart!" + UIColors.RESET);
-                    PromptDrink.askForDrink(cart);
+                    PromptCombo.askForCombo(cart);
                     running = false;
                 }
                 case 7 -> running = false;

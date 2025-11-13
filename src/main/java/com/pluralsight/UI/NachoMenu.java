@@ -4,9 +4,8 @@ import com.pluralsight.Food.Nachos;
 import com.pluralsight.Options.*;
 import com.pluralsight.System.Cart;
 import com.pluralsight.System.MenuHelper;
-import com.pluralsight.System.PromptDrink;
+import com.pluralsight.System.PromptCombo;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class NachoMenu {
@@ -41,7 +40,7 @@ public class NachoMenu {
                 case 6 -> {
                     cart.addItem(nachos);
                     System.out.println(UIColors.NEON_BLUE + "Nachos added to cart!" + UIColors.RESET);
-                    PromptDrink.askForDrink(cart);
+                    PromptCombo.askForCombo(cart);
                     running = false;
                 }
                 case 7 -> running = false;

@@ -4,7 +4,7 @@ import com.pluralsight.Food.Pizza;
 import com.pluralsight.Options.*;
 import com.pluralsight.System.Cart;
 import com.pluralsight.System.MenuHelper;
-import com.pluralsight.System.PromptDrink;
+import com.pluralsight.System.PromptCombo;
 
 import java.util.Scanner;
 
@@ -41,7 +41,7 @@ public class PizzaMenu {
                 case 6 -> {
                     cart.addItem(pizza);
                     System.out.println(UIColors.NEON_BLUE + "Pizza added to cart!" + UIColors.RESET);
-                    PromptDrink.askForDrink(cart);
+                    PromptCombo.askForCombo(cart);
                     running = false;
                 }
                 case 7 -> running = false;
