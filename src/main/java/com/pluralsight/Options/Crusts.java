@@ -3,7 +3,7 @@ package com.pluralsight.Options;
 public enum Crusts {
     HANDTOSSED("Hand Tossed", 0.0, "Basic"),
     THIN("Thin", 1.0, "Premium"),
-    STUFFED("Stuffed", 1.0, "Premium");
+    STUFFED("Stuffed", 2.50, "Deluxe");
 
     private final String displayName;
     private final double extraCost;

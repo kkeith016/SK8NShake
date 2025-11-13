@@ -4,6 +4,7 @@ import com.pluralsight.Food.Sandwich;
 import com.pluralsight.System.Cart;
 import com.pluralsight.Options.*;
 import com.pluralsight.System.PromptDrink;
+import com.pluralsight.System.MenuHelper;
 
 import java.util.List;
 import java.util.Scanner;
@@ -13,11 +14,9 @@ public class SandwichMenu {
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void display(Cart cart) {
-        // Create a new sandwich with default values
         Sandwich sandwich = new Sandwich("Custom Sandwich", Size.SMALL, 5.00, Bread.PITA, "");
 
         boolean running = true;
-
         while (running) {
             System.out.println(UIColors.NEON_PINK + "===================== SANDWICH MENU =====================" + UIColors.RESET);
             System.out.println(UIColors.NEON_YELLOW + """
@@ -31,142 +30,102 @@ public class SandwichMenu {
                 """ + UIColors.RESET);
 
             System.out.print(UIColors.NEON_GREEN + "Enter your choice: " + UIColors.RESET);
-            int choice = getIntInput();
+            int choice = MenuHelper.getIntInput(scanner);
 
             switch (choice) {
-                case 1 -> chooseSize(sandwich);
+                case 1 -> MenuHelper.chooseSize(sandwich, scanner);
                 case 2 -> chooseBread(sandwich);
                 case 3 -> chooseProtein(sandwich);
-                case 4 -> addToppings(sandwich);
-                case 5 -> previewSandwich(sandwich);
+                case 4 -> MenuHelper.addToppings(sandwich, "Sandwich", scanner);
+                case 5 -> previewItem(sandwich);
                 case 6 -> {
                     cart.addItem(sandwich);
                     System.out.println(UIColors.NEON_BLUE + "Sandwich added to cart!" + UIColors.RESET);
-                    // Ask user if they want a drink
                     PromptDrink.askForDrink(cart);
                     running = false;
                 }
                 case 7 -> running = false;
-                default -> System.out.println("\u001B[91mInvalid choice. Try again.\u001B[0m");
+                default -> System.out.println(UIColors.NEON_RED + "Invalid choice. Try again." + UIColors.RESET);
             }
-        }
-    }
-
-    private static void chooseSize(Sandwich sandwich) {
-        System.out.println("Select Size:");
-        for (Size s : Size.values()) {
-            System.out.println(s.ordinal() + 1 + ") " + s.getDisplayName());
-        }
-        int choice = getIntInput();
-        if (choice > 0 && choice <= Size.values().length) {
-            sandwich.setSize(Size.values()[choice - 1]);
-            System.out.println("Size set to " + sandwich.getSize().getDisplayName());
-        } else {
-            System.out.println("\u001B[91mInvalid choice.\u001B[0m");
         }
     }
 
     private static void chooseBread(Sandwich sandwich) {
         System.out.println("Select Bread:");
         for (Bread b : Bread.values()) {
-            System.out.println(b.ordinal() + 1 + ") " + b.getDisplayName() + " ($" + b.getExtraCost() + ")");
+            System.out.println((b.ordinal() + 1) + ") " + b.getDisplayName() + " ($" + b.getExtraCost() + ")");
         }
-        int choice = getIntInput();
+        int choice = MenuHelper.getIntInput(scanner);
         if (choice > 0 && choice <= Bread.values().length) {
             sandwich.setBread(Bread.values()[choice - 1]);
-            System.out.println("Bread set to " + sandwich.getBread().getDisplayName());
+            System.out.println(UIColors.NEON_GREEN + "Bread set to " + sandwich.getBread().getDisplayName() + UIColors.RESET);
         } else {
-            System.out.println("\u001B[91mInvalid choice.\u001B[0m");
+            System.out.println(UIColors.NEON_RED + "Invalid choice." + UIColors.RESET);
         }
     }
 
     private static void chooseProtein(Sandwich sandwich) {
-        System.out.println("Select Protein:");
         List<Protein> proteins = ProteinLibrary.getAllProteins().stream()
                 .filter(p -> p.isValidFor("Sandwich"))
                 .toList();
 
+        System.out.println("Select Protein (comma separated for multiple, Enter to skip):");
         for (int i = 0; i < proteins.size(); i++) {
             Protein p = proteins.get(i);
             System.out.println((i + 1) + ") " + p.getName() + " ($" + p.getBasePrice() + ")");
         }
 
-        int choice = getIntInput();
-        if (choice > 0 && choice <= proteins.size()) {
-            Protein selected = proteins.get(choice - 1);
-            sandwich.addTopping(new Topping(
-                    selected.getName(),
-                    "Meat",
-                    selected.getTier(),
-                    selected.getBasePrice(),
-                    List.of("Sandwich")
-            ));
-            System.out.println("Protein set to " + selected.getName());
-        } else {
-            System.out.println("\u001B[91mInvalid choice.\u001B[0m");
+        String input = scanner.nextLine();
+        if (!input.isBlank()) {
+            for (String part : input.split(",")) {
+                try {
+                    int idx = Integer.parseInt(part.trim()) - 1;
+                    if (idx >= 0 && idx < proteins.size()) {
+                        sandwich.addProtein(proteins.get(idx));
+                        System.out.println(UIColors.NEON_GREEN + proteins.get(idx).getName() + " added!" + UIColors.RESET);
+                    }
+                } catch (NumberFormatException ignored) {}
+            }
         }
     }
 
-    private static void addToppings(Sandwich sandwich) {
-        List<Topping> validToppings = ToppingsLibrary.getAllToppings().stream()
-                .filter(t -> t.isValidFor("Sandwich"))
-                .toList();
+    public static void previewItem(Sandwich sandwich) {
+        String headerColor = UIColors.NEON_PINK;
+        System.out.println(headerColor + "------------------- SANDWICH PREVIEW -------------------" + UIColors.RESET);
 
-        List<String> categories = List.of("Cheese", "Veggie", "Sauce", "Add-On", "Vegan", "Mix-In");
+        double totalPrice = sandwich.calculatePrice();
 
-        for (String category : categories) {
-            List<Topping> catToppings = validToppings.stream()
-                    .filter(t -> t.getCategory().equalsIgnoreCase(category))
-                    .toList();
-            if (catToppings.isEmpty()) continue;
+        // Show basic item info (base price only)
+        System.out.printf("1x %s (%s) ............ $%.2f%n",
+                sandwich.getName(),
+                sandwich.getSize() != null ? sandwich.getSize().getDisplayName() : "None",
+                sandwich.getBasePrice());
 
-            System.out.println(UIColors.NEON_YELLOW + "--- " + category + " ---" + UIColors.RESET);
-            for (int i = 0; i < catToppings.size(); i++) {
-                Topping t = catToppings.get(i);
-                System.out.println((i + 1) + ") " + t.getName() + " ($" + t.getBasePrice() + ")");
-            }
+        // Bread
+        if (sandwich.getBread() != null) {
+            System.out.printf("Bread: %-25s $%.2f%n",
+                    sandwich.getBread().getDisplayName(),
+                    sandwich.getBread().getExtraCost());
+        }
 
-            System.out.println("Enter numbers separated by commas to add " + category + " (or press Enter to skip):");
-            String input = scanner.nextLine();
-            if (!input.isBlank()) {
-                String[] parts = input.split(",");
-                for (String part : parts) {
-                    try {
-                        int index = Integer.parseInt(part.trim()) - 1;
-                        if (index >= 0 && index < catToppings.size()) {
-                            sandwich.addTopping(catToppings.get(index));
-                        }
-                    } catch (NumberFormatException ignored) {}
-                }
+        // Proteins
+        if (!sandwich.getProteins().isEmpty()) {
+            System.out.println("Proteins:");
+            for (Protein p : sandwich.getProteins()) {
+                System.out.printf("   + %-25s $%.2f%n", p.getName(), p.getBasePrice());
             }
         }
 
-        System.out.println(UIColors.NEON_BLUE + "Finished adding toppings!" + UIColors.RESET);
-    }
-
-    private static void previewSandwich(Sandwich sandwich) {
-        System.out.println(UIColors.NEON_PINK + "------------------- SANDWICH PREVIEW -------------------" + UIColors.RESET);
-
-        double mainPrice = sandwich.getBasePrice() + sandwich.getBread().getExtraCost();
-        System.out.printf("1x %s (%s) ............ $%.2f%n", sandwich.getName(), sandwich.getSize().getDisplayName(), mainPrice);
-        System.out.println("Bread: " + sandwich.getBread().getDisplayName());
-
-        for (Topping t : sandwich.getToppings()) {
-            System.out.printf("   + %-25s $%.2f%n", t.getName(), t.getBasePrice());
-        }
-
-        System.out.printf("Total Price: $%.2f%n", sandwich.calculatePrice());
-        System.out.println(UIColors.NEON_PINK + "-----------------------------------------------------" + UIColors.RESET);
-    }
-
-    private static int getIntInput() {
-        while (true) {
-            try {
-                System.out.print("> ");
-                return Integer.parseInt(scanner.nextLine().trim());
-            } catch (NumberFormatException e) {
-                System.out.println("\u001B[91mInvalid number. Try again.\u001B[0m");
+        // Toppings
+        if (!sandwich.getToppings().isEmpty()) {
+            System.out.println("Toppings:");
+            for (Topping t : sandwich.getToppings()) {
+                System.out.printf("   + %-25s $%.2f%n", t.getName(), t.getBasePrice());
             }
         }
+
+        // Total Price
+        System.out.printf("Total Price: $%.2f%n", totalPrice);
+        System.out.println(headerColor + "-----------------------------------------------------" + UIColors.RESET);
     }
 }

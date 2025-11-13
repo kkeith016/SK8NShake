@@ -6,4 +6,5 @@ public class UIColors {
     public static final String NEON_BLUE = "\u001B[96m";
     public static final String NEON_YELLOW = "\u001B[93m";
     public static final String NEON_GREEN = "\u001B[92m";
+    public static final String NEON_RED = "\u001B[91m";
 }

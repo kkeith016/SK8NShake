@@ -8,8 +8,7 @@ public class MainMenu {
 
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static void displayMainMenu() {
-        Cart cart = new Cart(); // shared cart instance
+    public static void displayMainMenu(Cart cart) {
         int choice;
 
         do {
@@ -46,7 +45,8 @@ public class MainMenu {
                 case 7 -> NeonHitsMenu.display();
                 case 8 -> CheckoutMenu.display(cart);
                 case 9 -> System.out.println(UIColors.NEON_PINK + "Thank you for visiting SK8 N’ SHAKE!" + UIColors.RESET);
-                default -> System.out.println("\u001B[91mInvalid choice. Please enter 1–9.\u001B[0m"); // red text for errors
+                default -> System.out.println(UIColors.NEON_RED + "Invalid choice. Please enter 1–9." + UIColors.RESET);
+
             }
 
         } while (choice != 9);
@@ -58,7 +58,7 @@ public class MainMenu {
                 System.out.print("> ");
                 return Integer.parseInt(scanner.nextLine().trim());
             } catch (NumberFormatException e) {
-                System.out.println("\u001B[91mPlease enter a valid number.\u001B[0m"); // red text
+                System.out.println(UIColors.NEON_RED + "Please enter a valid number." + UIColors.RESET);
             }
         }
     }

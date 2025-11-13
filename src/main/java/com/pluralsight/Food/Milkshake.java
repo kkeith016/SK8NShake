@@ -1,71 +1,74 @@
 package com.pluralsight.Food;
 
-import com.pluralsight.Options.Size;
-import com.pluralsight.Options.Topping;
+import com.pluralsight.Options.*;
 import com.pluralsight.System.Customizable;
+import com.pluralsight.System.MenuItems;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class Milkshake extends Drink implements Customizable {
+public class Milkshake extends MenuItems implements Customizable {
 
+
+    private String flavor;
     private final List<Topping> toppings;
+    private IceCreamBase iceCreamBase;
 
-    public Milkshake(String flavor, Size size, double basePrice) {
-        super(flavor + " Milkshake", size, basePrice, flavor);
+    public Milkshake(String name, Size size, double basePrice) {
+        super(name, size, basePrice, "");
         this.toppings = new ArrayList<>();
     }
+
+    public String getFlavor() {
+        return flavor;
+    }
+
+    public void setFlavor(String flavor) {
+        this.flavor = flavor;
+    }
+
+    public void setIceCreamBase(IceCreamBase base) {
+        this.iceCreamBase = base;
+    }
+
+    public IceCreamBase getIceCreamBase() {
+        return iceCreamBase;
+    }
+
 
     @Override
     public void addTopping(Topping topping) {
         toppings.add(topping);
-        System.out.println(topping.getName() + " added to your milkshake!");
     }
 
     @Override
     public void removeTopping(String toppingName) {
         toppings.removeIf(t -> t.getName().equalsIgnoreCase(toppingName));
-        System.out.println(toppingName + " removed from your milkshake.");
     }
 
     @Override
-    public List<Topping> getToppings() { return toppings; }
+    public List<Topping> getToppings() {
+        return toppings;
+    }
 
     @Override
+    public List<Protein> getProteins() {
+        return List.of();
+    }
+    @Override
     public double calculatePrice() {
-        double total = super.calculatePrice();
-        for (Topping t : toppings) {
-            total += t.getBasePrice();
-        }
+        double total = basePrice;
+
+        // Size modifier
+        if (size != null) total += size.getPriceModifier();
+
+        // Ice Cream Base cost
+        if (iceCreamBase != null) total += iceCreamBase.getExtraCost();
+
+        // Toppings cost
+        for (Topping t : getToppings()) total += t.getBasePrice();
+
         return total;
     }
 
-    @Override
-    public String toString() {
-        String toppingList = "None";
-        if (!toppings.isEmpty()) {
-            toppingList = toppings.stream()
-                    .map(Topping::getName)
-                    .collect(Collectors.joining(", "));
-        }
-
-        String sizeName = "None";
-        if (getSize() != null) {
-            sizeName = getSize().getDisplayName();
-        }
-
-        return String.format("""
-                Milkshake: %s (%s)
-                Flavor: %s
-                Toppings: %s
-                Price: $%.2f
-                """,
-                getName(),
-                sizeName,
-                super.getFlavor(),
-                toppingList,
-                calculatePrice()
-        );
-    }
 }

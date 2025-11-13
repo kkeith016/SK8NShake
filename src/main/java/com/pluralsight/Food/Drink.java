@@ -1,57 +1,32 @@
 package com.pluralsight.Food;
 
 import com.pluralsight.Options.Size;
+import com.pluralsight.Options.Topping;
+import com.pluralsight.Options.Protein;
 import com.pluralsight.System.MenuItems;
+
+import java.util.List;
 
 public class Drink extends MenuItems {
 
-    private String flavor;
+    private final String flavor;
 
     public Drink(String name, Size size, double basePrice, String flavor) {
         super(name, size, basePrice, "");
-
-        if (flavor != null && !flavor.isBlank()) {
-            this.flavor = flavor;
-        } else {
-            this.flavor = "Original";
-        }
+        this.flavor = (flavor == null || flavor.isBlank()) ? "Original" : flavor;
     }
 
-    public String getFlavor() { return flavor; }
-    public void setFlavor(String flavor) { this.flavor = flavor; }
-
-    @Override
-    public double calculatePrice() {
-        return super.calculatePrice(); // size modifier included
-    }
-
-    public String preview() {
-        String sizeName = "None";
-        if (getSize() != null) {
-            sizeName = getSize().getDisplayName();
-        }
-
-        return String.format(
-                "------------------- DRINK PREVIEW -------------------\n" +
-                        "Drink: %s (%s)\n" +
-                        "Flavor: %s\n" +
-                        "Price: $%.2f\n" +
-                        "-----------------------------------------------------\n",
-                getName(),
-                sizeName,
-                flavor,
-                calculatePrice()
-        );
+    public String getFlavor() {
+        return flavor;
     }
 
     @Override
-    public String toString() {
-        String sizeName = "None";
-        if (getSize() != null) {
-            sizeName = getSize().getDisplayName();
-        }
+    public List<Topping> getToppings() {
+        return List.of();
+    }
 
-        return String.format("%s (%s) - %s - $%.2f",
-                getName(), sizeName, flavor, calculatePrice());
+    @Override
+    public List<Protein> getProteins() {
+        return List.of();
     }
 }

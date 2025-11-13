@@ -7,6 +7,6 @@ public class PosMain {
     public static void main(String[] args) {
         Cart cart = new Cart();
 
-        MainMenu.displayMainMenu();
+        MainMenu.displayMainMenu(cart);
 }
 }

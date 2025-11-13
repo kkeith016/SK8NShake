@@ -1,6 +1,6 @@
 package com.pluralsight.UI;
 
-import com.pluralsight.Options.Sides;
+import com.pluralsight.Food.Sides;
 import com.pluralsight.Options.SideLibrary;
 import com.pluralsight.System.Cart;
 import com.pluralsight.System.PromptDrink;
