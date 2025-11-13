@@ -35,7 +35,7 @@ public class MenuHelper {
             return;
         }
 
-        // Filter toppings valid for this food type
+
         List<Topping> validToppings = ToppingsLibrary.getAllToppings().stream()
                 .filter(t -> t.isValidFor(foodType))
                 .toList();
@@ -118,13 +118,13 @@ public class MenuHelper {
         System.out.println(headerColor + "------------------- " + title.toUpperCase() + " PREVIEW -------------------" + UIColors.RESET);
 
         if (item instanceof MenuItems mi) {
-            // Calculate total using overridden calculatePrice() in each subclass
+
             System.out.printf("1x %s (%s) ............ $%.2f%n",
                     mi.getName(),
                     mi.getSize() != null ? mi.getSize().getDisplayName() : "None",
                     mi.calculatePrice());
 
-            // If the item has subclass-specific extras, display them
+
             if (mi instanceof Sandwich s && s.getBread() != null) {
                 System.out.printf("Bread: %s (+$%.2f)%n", s.getBread().getDisplayName(), s.getBread().getExtraCost());
             }
@@ -142,7 +142,6 @@ public class MenuHelper {
             }
         }
 
-        // Show toppings if any
         item.showToppings();
 
         System.out.println(headerColor + "---------------------------------------------------" + UIColors.RESET);

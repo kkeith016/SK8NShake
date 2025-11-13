@@ -55,16 +55,16 @@ public class DrinkMenu {
         }
         String selectedFlavor = flavors.get(flavorChoice - 1);
 
-        // Step 4: Create Drink object
+
         Drink drink = new Drink(selectedDrink, selectedSize, getBasePrice(selectedDrink, selectedSize), selectedFlavor);
 
-        // Step 5: Preview
+
         System.out.println(UIColors.NEON_PINK + "------------------- DRINK PREVIEW -------------------" + UIColors.RESET);
         System.out.printf("%s (%s)\nFlavor: %s\nPrice: $%.2f%n",
                 drink.getName(), drink.getSize().getDisplayName(), drink.getFlavor(), drink.calculatePrice());
         System.out.println(UIColors.NEON_PINK + "-----------------------------------------------------" + UIColors.RESET);
 
-        // Step 6: Add to Cart?
+
         System.out.print("Add this drink to cart? (Y/N): ");
         String input = scanner.nextLine().trim().toLowerCase();
         if (input.equals("y") || input.equals("yes")) {

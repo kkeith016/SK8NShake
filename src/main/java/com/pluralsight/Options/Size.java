@@ -8,7 +8,7 @@ public enum Size {
     private final String displayName;
     private final double priceModifier;
 
-    // Constructor
+
     Size(String displayName, double priceModifier) {
         this.displayName = displayName;
         this.priceModifier = priceModifier;

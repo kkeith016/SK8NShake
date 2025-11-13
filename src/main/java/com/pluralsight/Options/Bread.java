@@ -9,7 +9,7 @@ public enum Bread {
     private final double extraCost;
     private final String tier;
 
-    // Constructor MUST match enum name
+
     Bread(String displayName, double extraCost, String tier) {
         this.displayName = displayName;
         this.extraCost = extraCost;

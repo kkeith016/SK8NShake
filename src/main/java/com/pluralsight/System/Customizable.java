@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface Customizable {
 
-    // ---- Core behavior for customizable menu items ----
+
     void addTopping(Topping topping);
     void removeTopping(String toppingName);
     List<Topping> getToppings();
