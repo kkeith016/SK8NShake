@@ -19,15 +19,15 @@ public class MainMenu {
             System.out.println(UIColors.NEON_BLUE + "             Slide into flavor with our signature picks!\n" + UIColors.RESET);
 
             System.out.println(UIColors.NEON_YELLOW + """
-                1) Sandwich
-                2) Nacho
-                3) Pizza
-                4) Drinks
-                5) Milkshake
-                6) Sides
-                7) Neon Hits
-                8) Check Out
-                9) Exit
+                1) 🍔 Sandwich
+                2) 🥙 Nacho
+                3) 🍕 Pizza
+                4) 🥤 Drinks
+                5) 🍦 Milkshake
+                6) 🍟 Sides
+                7) ✨ Neon Hits
+                8) 🛒 Check Out/View Cart
+                9) 👋 Exit
                 """ + UIColors.RESET);
 
             System.out.println(UIColors.NEON_BLUE + "-----------------------------------------------------------" + UIColors.RESET);
@@ -44,7 +44,23 @@ public class MainMenu {
                 case 6 -> SidesMenu.display(cart);
                 case 7 -> NeonHitsMenu.display();
                 case 8 -> CheckoutMenu.display(cart);
-                case 9 -> System.out.println(UIColors.NEON_PINK + "Thank you for visiting SK8 N’ SHAKE!" + UIColors.RESET);
+                case 9 -> {
+                    if (!cart.isEmpty()) {
+                        System.out.print(UIColors.NEON_YELLOW +
+                                "You have items in your cart. Would you like to check out? (Y/N): " + UIColors.RESET);
+                        String input = scanner.nextLine().trim().toLowerCase();
+
+                        if (input.equals("y") || input.equals("yes")) {
+                            CheckoutMenu.display(cart);
+                        } else {
+                            cart.clear();
+                            System.out.println(UIColors.NEON_PINK + "Cart emptied. Exiting program." + UIColors.RESET);
+                        }
+                    } else {
+                        System.out.println(UIColors.NEON_PINK + "Thank you for visiting SK8 N’ SHAKE!" + UIColors.RESET);
+                    }
+                }
+
                 default -> System.out.println(UIColors.NEON_RED + "Invalid choice. Please enter 1–9." + UIColors.RESET);
 
             }
