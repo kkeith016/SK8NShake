@@ -20,19 +20,24 @@ public class SidesMenu {
             System.out.println(UIColors.NEON_PINK + "===================== SIDE MENU =====================" + UIColors.RESET);
             System.out.println(UIColors.NEON_YELLOW + """
                 1) View All Sides
-                2) Choose a Side & Set Size
-                3) Add Side to Cart
-                4) Return to Main Menu
+                2) Choose a Side & Add to Cart
+                3) Return to Main Menu
                 """ + UIColors.RESET);
 
             int choice = MenuHelper.getIntInput(scanner);
-            Sides selectedSide = null; // store the side the user chooses
 
             switch (choice) {
-                case 1 -> showAllSides(); // list all sides by tier
-                case 2 -> selectedSide = chooseSideAndSize(); // pick side + size
-                case 3 -> addSelectedSideToCart(cart, selectedSide); // add it to cart
-                case 4 -> running = false;
+                case 1 -> showAllSides();
+                case 2 -> {
+                    Sides selectedSide = chooseSideAndSize();
+                    if (selectedSide != null) {
+                        cart.addItem(selectedSide);
+                        System.out.println(UIColors.NEON_BLUE + selectedSide.getName() +
+                                " added to cart! Size: " + selectedSide.getSize() + UIColors.RESET);
+                        PromptCombo.askForCombo(cart);
+                    }
+                }
+                case 3 -> running = false;
                 default -> System.out.println(UIColors.NEON_PINK + "Invalid choice. Try again." + UIColors.RESET);
             }
         }
@@ -71,23 +76,12 @@ public class SidesMenu {
         int choice = MenuHelper.getIntInput(scanner);
         if (choice > 0 && choice <= sides.size()) {
             Sides selected = sides.get(choice - 1);
-            // Use MenuHelper to set size
+            // Let MenuHelper handle size selection
             MenuHelper.chooseSize(selected, scanner);
             return selected;
         } else {
             System.out.println(UIColors.NEON_PINK + "Invalid choice." + UIColors.RESET);
             return null;
-        }
-    }
-
-    private static void addSelectedSideToCart(Cart cart, Sides selectedSide) {
-        if (selectedSide != null) {
-            cart.addItem(selectedSide);
-            System.out.println(UIColors.NEON_BLUE + selectedSide.getName() +
-                    " added to cart! Size: " + selectedSide.getSize() + UIColors.RESET);
-            PromptCombo.askForCombo(cart);
-        } else {
-            System.out.println(UIColors.NEON_PINK + "No side selected. Please choose a side first." + UIColors.RESET);
         }
     }
 }

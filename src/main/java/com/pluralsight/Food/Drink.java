@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Drink extends MenuItems {
 
-    private final String flavor;
+    private String flavor; // removed final
 
     public Drink(String name, Size size, double basePrice, String flavor) {
         super(name, size, basePrice, "");
@@ -19,7 +19,11 @@ public class Drink extends MenuItems {
     public String getFlavor() {
         return flavor;
     }
+
     public void setFlavor(String flavor) {
+        if (flavor != null && !flavor.isBlank()) {
+            this.flavor = flavor;
+        }
     }
 
     @Override

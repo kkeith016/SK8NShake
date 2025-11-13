@@ -32,7 +32,7 @@ public class MilkshakeMenu {
 
             switch (choice) {
                 case 1 -> MenuHelper.chooseSize(milkshake, scanner);
-                case 2 -> chooseBase(milkshake); // Only flavor selection is Milkshake-specific
+                case 2 -> chooseBase(milkshake);
                 case 3 -> MenuHelper.addToppings(milkshake, "Milkshake", scanner); // <- FIXED
                 case 4 -> MenuHelper.removeToppings(milkshake, scanner);
                 case 5 -> MenuHelper.previewItem(milkshake,"Milkshake");

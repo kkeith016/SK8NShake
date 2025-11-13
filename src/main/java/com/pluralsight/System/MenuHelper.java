@@ -118,34 +118,46 @@ public class MenuHelper {
         System.out.println(headerColor + "------------------- " + title.toUpperCase() + " PREVIEW -------------------" + UIColors.RESET);
 
         if (item instanceof MenuItems mi) {
+            double basePrice = mi.getBasePrice();
+            Size size = mi.getSize();
+            double sizeAdjustment = (size != null) ? size.getPriceModifier() : 0.0;
 
-            System.out.printf("   %s (%s) ............ $%.2f%n",
+            System.out.printf("1x %s (%s)%n",
                     mi.getName(),
-                    mi.getSize() != null ? mi.getSize().getDisplayName() : "None",
-                    mi.calculatePrice());
+                    size != null ? size.getDisplayName() : "None");
 
+            // Show base price
+            System.out.printf("Base Price: $%.2f%n", basePrice);
 
+            // Show added cost for size
+            if (sizeAdjustment > 0) {
+                System.out.printf("Size Adjustment (%s): +$%.2f%n", size.getDisplayName(), sizeAdjustment);
+            }
+
+            // Type-specific add-ons
             if (mi instanceof Sandwich s && s.getBread() != null) {
                 System.out.printf("Bread: %s (+$%.2f)%n", s.getBread().getDisplayName(), s.getBread().getExtraCost());
             }
-
             if (mi instanceof Pizza p && p.getCrust() != null) {
                 System.out.printf("Crust: %s (+$%.2f)%n", p.getCrust().getDisplayName(), p.getCrust().getExtraCost());
             }
-
             if (mi instanceof Nachos n && n.getChips() != null) {
                 System.out.printf("Chips: %s (+$%.2f)%n", n.getChips().getDisplayName(), n.getChips().getExtraCost());
             }
-
             if (mi instanceof Milkshake m && m.getIceCreamBase() != null) {
                 System.out.printf("Ice Cream Base: %s (+$%.2f)%n", m.getIceCreamBase().getDisplayName(), m.getIceCreamBase().getExtraCost());
             }
-        }
 
-        item.showToppings();
+            // Toppings
+            item.showToppings();
+
+            // Total price
+            System.out.printf(UIColors.NEON_BLUE + "Total Price: $%.2f%n" + UIColors.RESET, mi.calculatePrice());
+        }
 
         System.out.println(headerColor + "---------------------------------------------------" + UIColors.RESET);
     }
+
 
 
     // ------------------- Utility -------------------

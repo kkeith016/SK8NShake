@@ -37,7 +37,7 @@ public class SandwichMenu {
                 case 2 -> chooseBread(sandwich);
                 case 3 -> chooseProtein(sandwich);
                 case 4 -> MenuHelper.addToppings(sandwich, "Sandwich", scanner);
-                case 5 -> previewItem(sandwich);
+                case 5 -> MenuHelper.previewItem(sandwich, "Sandwich");
                 case 6 -> {
                     cart.addItem(sandwich);
                     System.out.println(UIColors.NEON_BLUE + "Sandwich added to cart!" + UIColors.RESET);
@@ -79,53 +79,13 @@ public class SandwichMenu {
         if (!input.isBlank()) {
             for (String part : input.split(",")) {
                 try {
-                    int idx = Integer.parseInt(part.trim()) - 1;
-                    if (idx >= 0 && idx < proteins.size()) {
-                        sandwich.addProtein(proteins.get(idx));
-                        System.out.println(UIColors.NEON_GREEN + proteins.get(idx).getName() + " added!" + UIColors.RESET);
+                    int proteinIndex = Integer.parseInt(part.trim()) - 1;
+                    if (proteinIndex >= 0 && proteinIndex < proteins.size()) {
+                        sandwich.addProtein(proteins.get(proteinIndex));
+                        System.out.println(UIColors.NEON_GREEN + proteins.get(proteinIndex).getName() + " added!" + UIColors.RESET);
                     }
                 } catch (NumberFormatException ignored) {}
             }
         }
-    }
-
-    public static void previewItem(Sandwich sandwich) {
-        String headerColor = UIColors.NEON_PINK;
-        System.out.println(headerColor + "------------------- SANDWICH PREVIEW -------------------" + UIColors.RESET);
-
-        double totalPrice = sandwich.calculatePrice();
-
-        // Show basic item info (base price only)
-        System.out.printf("1x %s (%s) ............ $%.2f%n",
-                sandwich.getName(),
-                sandwich.getSize() != null ? sandwich.getSize().getDisplayName() : "None",
-                sandwich.getBasePrice());
-
-        // Bread
-        if (sandwich.getBread() != null) {
-            System.out.printf("Bread: %-25s $%.2f%n",
-                    sandwich.getBread().getDisplayName(),
-                    sandwich.getBread().getExtraCost());
-        }
-
-        // Proteins
-        if (!sandwich.getProteins().isEmpty()) {
-            System.out.println("Proteins:");
-            for (Protein p : sandwich.getProteins()) {
-                System.out.printf("   + %-25s $%.2f%n", p.getName(), p.getBasePrice());
-            }
-        }
-
-        // Toppings
-        if (!sandwich.getToppings().isEmpty()) {
-            System.out.println("Toppings:");
-            for (Topping t : sandwich.getToppings()) {
-                System.out.printf("   + %-25s $%.2f%n", t.getName(), t.getBasePrice());
-            }
-        }
-
-        // Total Price
-        System.out.printf("Total Price: $%.2f%n", totalPrice);
-        System.out.println(headerColor + "-----------------------------------------------------" + UIColors.RESET);
     }
 }
